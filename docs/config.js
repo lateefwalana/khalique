@@ -14,5 +14,5 @@ window.CONFIG = {
 
   // The Web OAuth 2.0 Client ID from Google Cloud
   // (looks like 1234567890-abc123.apps.googleusercontent.com).
-  CLIENT_ID: 'PASTE_YOUR_OAUTH_CLIENT_ID_HERE',
+  CLIENT_ID: '415797216363-p81unhifo62dp677i7c54f1nlelstadj.apps.googleusercontent.com',
 };
