@@ -1,0 +1,29 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# This repo is intended to be PUBLIC (GitHub Pages). NO PATIENT DATA may ever be
+# committed. Strategy: ignore EVERYTHING at the root, then re-include only the
+# folders that hold code (no records live in them). Patient files — the .xlsx
+# register, scanned PDFs, NEEDS-CHECKING*.csv, desktop/patients.json, WhatsApp
+# media — all sit at the root and stay ignored.
+# ─────────────────────────────────────────────────────────────────────────────
+/*
+!/.gitignore
+!/README.md
+!/docs/
+!/webapp/
+
+# Belt and suspenders: never track a data file even if one is placed inside an
+# allowed folder by mistake.
+*.xlsx
+*.csv
+*.pdf
+*.ogg
+*.jpg
+*.jpeg
+*.png
+*.sqlite
+patients.json
+
+# The desktop app's build artefacts, if that folder is ever un-ignored.
+node_modules/
+dist/
+build/

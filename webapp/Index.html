@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<style>
+  :root {
+    --green: #1F6F54;
+    --green-dark: #17543F;
+    --green-deep: #0E3A2B;
+    --light: #E8F1ED;
+    --line: #D9E2DD;
+    --ink: #1C2B26;
+    --muted: #6B7B75;
+    --bg: #F7F9F8;
+    --gold: #C9A227;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, "Noto Nastaliq Urdu", Arial, sans-serif;
+    font-size: 16px; line-height: 1.45;
+  }
+
+  /* ─────────────── LANDING / SIGN-IN ─────────────── */
+  #view-login {
+    min-height: 100vh;
+    background:
+      radial-gradient(1100px 600px at 80% -10%, rgba(201,162,39,.16), transparent 60%),
+      linear-gradient(160deg, var(--green-deep) 0%, var(--green-dark) 55%, var(--green) 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 28px 18px;
+  }
+  .landing {
+    width: 100%; max-width: 940px;
+    display: grid; grid-template-columns: 1.1fr .9fr; gap: 0;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.35);
+    backdrop-filter: blur(6px);
+  }
+  .brand { padding: 44px 40px; color: #fff; }
+  .crest {
+    width: 54px; height: 54px; border-radius: 14px;
+    background: linear-gradient(140deg, var(--gold), #8c6f16);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 800; color: #1a1405;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25); margin-bottom: 22px;
+  }
+  .brand h1 { margin: 0 0 6px; font-size: 30px; line-height: 1.15; font-weight: 800; letter-spacing: -.01em; }
+  .brand .ur { font-size: 19px; opacity: .92; margin-bottom: 18px; }
+  .brand .addr { font-size: 13px; opacity: .78; }
+  .brand .reg {
+    display: inline-block; margin-top: 16px; font-size: 11px; letter-spacing: .04em;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18);
+    padding: 5px 11px; border-radius: 999px; opacity: .92;
+  }
+  .brand ul { list-style: none; padding: 0; margin: 26px 0 0; }
+  .brand li {
+    font-size: 14px; opacity: .9; padding: 7px 0 7px 24px; position: relative;
+  }
+  .brand li::before {
+    content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 700;
+  }
+
+  .signin { background: #fff; padding: 40px 36px; }
+  .signin h2 { margin: 0 0 4px; font-size: 21px; }
+  .signin .sub { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+  .signin label { display: block; font-size: 13px; font-weight: 600; margin: 0 0 5px; color: #3A4A44; }
+  .signin input {
+    width: 100%; padding: 13px; font-size: 16px; border: 1px solid var(--line);
+    border-radius: 9px; margin-bottom: 15px; background: #FBFDFC;
+  }
+  .signin input:focus {
+    outline: none; border-color: var(--green); background: #fff;
+    box-shadow: 0 0 0 3px rgba(31,111,84,.12);
+  }
+  .signin button {
+    width: 100%; padding: 14px; font-size: 16px; font-weight: 700; color: #fff;
+    background: var(--green); border: 0; border-radius: 9px; cursor: pointer;
+  }
+  .signin button:hover { background: var(--green-dark); }
+  .signin button:disabled { opacity: .6; cursor: default; }
+  .loginerr {
+    display: none; background: #FDECEA; color: #A32B24; border: 1px solid #F3C6C2;
+    padding: 10px 12px; border-radius: 8px; font-size: 14px; margin-bottom: 14px;
+  }
+  .hint { margin-top: 18px; font-size: 12px; color: var(--muted); text-align: center; }
+
+  @media (max-width: 780px) {
+    .landing { grid-template-columns: 1fr; max-width: 460px; }
+    .brand { padding: 32px 28px 26px; }
+    .brand ul { display: none; }
+    .brand h1 { font-size: 25px; }
+    .signin { padding: 28px 24px 32px; }
+  }
+
+  /* ─────────────── APP ─────────────── */
+  #app { display: none; }
+  header { background: var(--green); color: #fff; padding: 12px 16px; position: relative; }
+  header .htxt { text-align: center; }
+  header h1 { margin: 0; font-size: 18px; font-weight: 700; }
+  header .addr { font-size: 11px; opacity: .85; margin-top: 2px; }
+  header .reg  { font-size: 10px; opacity: .65; }
+  header .out {
+    position: absolute; right: 12px; top: 12px;
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+    color: #fff; border-radius: 7px; padding: 6px 11px; font-size: 12px; cursor: pointer;
+  }
+  header .out:hover { background: rgba(255,255,255,.26); }
+
+  nav { display: flex; background: var(--green-dark); }
+  nav button {
+    flex: 1; padding: 12px 8px; border: 0; background: transparent; color: #fff;
+    font-size: 15px; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent;
+  }
+  nav button.active { background: rgba(255,255,255,.12); border-bottom-color: #fff; }
+
+  .warn {
+    display: none; background: #FFF4D6; border-bottom: 1px solid #EBD9A3;
+    color: #6B5310; font-size: 13px; padding: 9px 16px; text-align: center;
+  }
+  .warn a { color: #6B5310; font-weight: 700; cursor: pointer; text-decoration: underline; }
+
+  main { padding: 16px; max-width: 900px; margin: 0 auto; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .searchbar { display: flex; gap: 8px; margin-bottom: 14px; }
+  .searchbar input {
+    flex: 1; padding: 14px; font-size: 17px; border: 2px solid var(--line);
+    border-radius: 8px; background: #fff;
+  }
+  .searchbar input:focus { outline: none; border-color: var(--green); }
+
+  .result {
+    background: #fff; border: 1px solid var(--line); border-radius: 8px;
+    padding: 12px 14px; margin-bottom: 8px; cursor: pointer; display: flex;
+    align-items: center; gap: 12px;
+  }
+  .result:hover { border-color: var(--green); }
+  .result .ref {
+    background: var(--light); color: var(--green-dark); font-weight: 700;
+    border-radius: 6px; padding: 6px 10px; min-width: 44px; text-align: center;
+  }
+  .result .who { flex: 1; min-width: 0; }
+  .result .nm { font-weight: 600; }
+  .result .sub { font-size: 13px; color: var(--muted); }
+
+  form .group { margin-bottom: 18px; }
+  form .group > h3 {
+    margin: 0 0 10px; font-size: 13px; text-transform: uppercase;
+    letter-spacing: .04em; color: var(--green); border-bottom: 1px solid var(--line);
+    padding-bottom: 5px;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #3A4A44; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 11px; font-size: 16px; border: 1px solid var(--line);
+    border-radius: 7px; background: #fff; font-family: inherit;
+  }
+  .field textarea { min-height: 74px; resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(31,111,84,.12);
+  }
+  .field.wide { grid-column: 1 / -1; }
+
+  button.btn {
+    background: var(--green); color: #fff; border: 0; border-radius: 8px;
+    padding: 13px 22px; font-size: 16px; font-weight: 600; cursor: pointer;
+  }
+  button.btn:hover { background: var(--green-dark); }
+  button.btn.ghost { background: #fff; color: var(--green); border: 1px solid var(--green); }
+  button.btn:disabled { opacity: .55; cursor: default; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+  .pt-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .pt-head h2 { margin: 0; font-size: 22px; }
+  .pt-head .refbadge {
+    background: var(--light); color: var(--green-dark); font-weight: 700;
+    padding: 3px 10px; border-radius: 6px; font-size: 14px;
+  }
+  .details { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px 20px; margin-top: 14px; }
+  .details .d { border-bottom: 1px dotted var(--line); padding-bottom: 5px; }
+  .details .k { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  .details .v { font-size: 15px; white-space: pre-wrap; word-wrap: break-word; }
+  .details .v:empty::after { content: "—"; color: #C3CCC8; }
+
+  h3.sec { margin: 22px 0 10px; font-size: 15px; color: var(--green); }
+  table.visits { width: 100%; border-collapse: collapse; font-size: 15px; }
+  table.visits th {
+    background: var(--green); color: #fff; text-align: left; padding: 9px 10px;
+    font-size: 12px; text-transform: uppercase; letter-spacing: .03em;
+  }
+  table.visits td { border: 1px solid var(--line); padding: 9px 10px; vertical-align: top; white-space: pre-wrap; }
+  table.visits td.n { text-align: center; font-weight: 700; color: var(--green); width: 48px; }
+  table.visits td.dt { width: 104px; white-space: nowrap; }
+
+  .empty { color: var(--muted); padding: 22px; text-align: center; }
+  .toast {
+    position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+    background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 8px;
+    font-size: 15px; opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 50;
+    max-width: 90vw; text-align: center;
+  }
+  .toast.show { opacity: 1; }
+  .toast.err { background: #A32B24; }
+
+  .print-head { display: none; }
+
+  @media print {
+    body { background: #fff; }
+    header, nav, .warn, .no-print, .searchbar { display: none !important; }
+    main { padding: 0; max-width: none; }
+    .card { border: 0; padding: 0; }
+    .print-head { display: block; text-align: center; margin-bottom: 14px; }
+    .print-head .cn { font-size: 20px; font-weight: 700; color: #1F6F54; }
+    .print-head .ca { font-size: 11px; color: #555; }
+    .print-head .cr { font-size: 10px; color: #888; }
+    table.visits th { background: #1F6F54 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .details .d { break-inside: avoid; }
+    table.visits tr { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ───────────── LANDING / SIGN-IN ───────────── -->
+<section id="view-login">
+  <div class="landing">
+    <div class="brand">
+      <div class="crest">ک</div>
+      <h1>Khalique Homoeopathic Clinic</h1>
+      <div class="ur">خلیق ہومیوپیتھک کلینک، بھیرہ</div>
+      <div class="addr">Circular Road, Lalu Wala, Bhera, Sargodha</div>
+      <div class="reg">PHC Reg. No: PHC/R&amp;L/2026/13527</div>
+      <ul>
+        <li>Patient register &amp; case history / مریض کا ریکارڈ</li>
+        <li>Visit-by-visit remedies / ہر وزٹ کی دوا</li>
+        <li>Printable patient card / پرنٹ کارڈ</li>
+      </ul>
+    </div>
+
+    <div class="signin">
+      <h2>Sign in / سائن ان</h2>
+      <div class="sub">Patient register — staff only</div>
+
+      <div id="loginErr" class="loginerr"></div>
+
+      <label for="lgUser">Username / صارف نام</label>
+      <input id="lgUser" autocomplete="username" autocapitalize="none" spellcheck="false">
+
+      <label for="lgPass">Password / پاس ورڈ</label>
+      <input id="lgPass" type="password" autocomplete="current-password">
+
+      <button id="lgBtn">Sign in / داخل ہوں</button>
+
+      <div class="hint">Records are stored in the clinic's own Google account.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── APP ───────────── -->
+<div id="app">
+  <header>
+    <button class="out no-print" id="btnLogout">Sign out</button>
+    <div class="htxt">
+      <h1 id="clinicName">Khalique Homoeopathic Clinic</h1>
+      <div class="addr" id="clinicAddr"></div>
+      <div class="reg" id="clinicReg"></div>
+    </div>
+  </header>
+
+  <nav>
+    <button id="tabSearch" class="active">Search / تلاش</button>
+    <button id="tabNew">+ New Patient / نیا مریض</button>
+  </nav>
+
+  <div class="warn" id="pwWarn">
+    Still using the default password (admin). <a id="lnkChangePw">Change it now</a>
+  </div>
+
+  <main>
+
+    <!-- SEARCH -->
+    <section id="view-search" class="view active">
+      <div class="searchbar">
+        <input id="q" type="search" placeholder="Name, mobile or Ref.No — نام، موبائل یا ریفرنس نمبر" autocomplete="off">
+      </div>
+      <div id="results"></div>
+    </section>
+
+    <!-- PATIENT -->
+    <section id="view-patient" class="view">
+      <button id="btnBackToSearch" class="btn ghost no-print" style="margin-bottom:12px">← Back / واپس</button>
+      <div class="card">
+        <div class="print-head">
+          <div class="cn" id="pcName"></div>
+          <div class="ca" id="pcAddr"></div>
+          <div class="cr" id="pcReg"></div>
+        </div>
+
+        <div class="pt-head">
+          <h2 id="ptName"></h2>
+          <span class="refbadge" id="ptRef"></span>
+        </div>
+        <div class="details" id="ptDetails"></div>
+
+        <h3 class="sec">Visit History / وزٹ کی تفصیل</h3>
+        <table class="visits">
+          <thead>
+            <tr>
+              <th style="width:48px">#</th>
+              <th style="width:104px">Date</th>
+              <th>Condition / Changes — حالت</th>
+              <th>Remedy with Instructions — دوا اور ہدایات</th>
+            </tr>
+          </thead>
+          <tbody id="ptVisits"></tbody>
+        </table>
+
+        <div class="actions no-print" style="margin-top:16px">
+          <button id="btnAddVisit" class="btn">+ Add Visit / نیا وزٹ</button>
+          <button id="btnEditPatient" class="btn ghost">Edit details / تفصیل درست کریں</button>
+          <button id="btnPrint" class="btn ghost">Print / پرنٹ</button>
+        </div>
+
+        <div id="visitForm" class="no-print" style="display:none; margin-top:18px; border-top:2px solid var(--line); padding-top:16px">
+          <h3 class="sec" style="margin-top:0">New Visit / نیا وزٹ</h3>
+          <div class="grid">
+            <div class="field">
+              <label>Date / تاریخ</label>
+              <input id="vDate" type="date">
+            </div>
+          </div>
+          <div class="field wide" style="margin-top:12px">
+            <label>Condition / Changes — حالت اور تبدیلی</label>
+            <textarea id="vCondition" dir="auto"></textarea>
+          </div>
+          <div class="field wide" style="margin-top:12px">
+            <label>Remedy with Instructions — دوا اور ہدایات</label>
+            <textarea id="vRemedy" dir="auto"></textarea>
+          </div>
+          <div class="actions">
+            <button class="btn" id="vSave">Save Visit / محفوظ کریں</button>
+            <button class="btn ghost" id="vCancel">Cancel / منسوخ</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PATIENT FORM -->
+    <section id="view-form" class="view">
+      <button id="btnFormBack" class="btn ghost" style="margin-bottom:12px">← Back / واپس</button>
+      <div class="card">
+        <h2 id="formTitle" style="margin:0 0 16px">New Patient / نیا مریض</h2>
+        <form id="pForm">
+
+          <div class="group">
+            <h3>Patient / مریض</h3>
+            <div class="grid">
+              <div class="field"><label>Date / تاریخ</label><input id="f_date" type="date"></div>
+              <div class="field"><label>Time / وقت</label><input id="f_time" type="time"></div>
+              <div class="field"><label>Patient Name / مریض کا نام *</label><input id="f_name" dir="auto" required></div>
+              <div class="field"><label>Occupation / پیشہ</label><input id="f_occupation" dir="auto"></div>
+              <div class="field"><label>Mobile No / موبائل نمبر</label><input id="f_mobile" inputmode="tel"></div>
+              <div class="field"><label>Address / پتہ</label><input id="f_address" dir="auto"></div>
+            </div>
+          </div>
+
+          <div class="group">
+            <h3>Personal History / ذاتی تفصیل</h3>
+            <div class="grid">
+              <div class="field">
+                <label>Sex / جنس</label>
+                <select id="f_sex">
+                  <option value=""></option>
+                  <option>Male / مرد</option>
+                  <option>Female / عورت</option>
+                  <option>Child / بچہ</option>
+                </select>
+              </div>
+              <div class="field"><label>Age / عمر</label><input id="f_age"></div>
+              <div class="field"><label>Weight / وزن</label><input id="f_weight"></div>
+              <div class="field"><label>B.P / بلڈ پریشر</label><input id="f_bp"></div>
+              <div class="field"><label>Pulse / نبض</label><input id="f_pulse"></div>
+              <div class="field"><label>Temp / درجہ حرارت</label><input id="f_temp"></div>
+              <div class="field wide"><label>Family History / خاندانی امراض</label><textarea id="f_familyHistory" dir="auto"></textarea></div>
+            </div>
+          </div>
+
+          <div class="group">
+            <h3>Case / کیس</h3>
+            <div class="grid">
+              <div class="field wide"><label>Symptoms / علامات</label><textarea id="f_symptoms" dir="auto"></textarea></div>
+              <div class="field wide"><label>Clinical Reports / کلینیکل رپورٹس</label><textarea id="f_clinicalReports" dir="auto"></textarea></div>
+              <div class="field"><label>Allergies / الرجی</label><input id="f_allergies" dir="auto"></div>
+              <div class="field"><label>Causation / سبب</label><input id="f_causation" dir="auto"></div>
+              <div class="field"><label>Location / مقام</label><input id="f_location" dir="auto"></div>
+              <div class="field"><label>Constitution / مزاج</label><input id="f_constitution" dir="auto"></div>
+              <div class="field"><label>Sensation / احساس</label><input id="f_sensation" dir="auto"></div>
+              <div class="field wide"><label>Modality / موڈیلٹی — better &amp; worse</label><textarea id="f_modality" dir="auto"></textarea></div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn" id="pSave">Save Patient / محفوظ کریں</button>
+            <button type="button" class="btn ghost" id="pCancel">Cancel / منسوخ</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- CHANGE PASSWORD -->
+    <section id="view-pw" class="view">
+      <button id="btnPwBack" class="btn ghost" style="margin-bottom:12px">← Back / واپس</button>
+      <div class="card" style="max-width:460px">
+        <div id="mustPw" style="display:none; background:#FFF4D6; border:1px solid #EBD9A3; color:#6B5310; padding:12px 14px; border-radius:8px; margin-bottom:16px; font-size:14px">
+          <strong>Set a password before you can open the register.</strong><br>
+          This app is reachable on the internet, so the default password
+          (<code>admin</code>) unlocks nothing. Choose a real one — at least 8 characters.<br>
+          <span style="font-size:13px">رجسٹر کھولنے سے پہلے پاس ورڈ بنائیں۔</span>
+        </div>
+        <h2 style="margin:0 0 16px">Change Password / پاس ورڈ تبدیل کریں</h2>
+        <div class="field" style="margin-bottom:12px">
+          <label>Current password / موجودہ پاس ورڈ</label>
+          <input id="pwOld" type="password" autocomplete="current-password">
+        </div>
+        <div class="field" style="margin-bottom:12px">
+          <label>New password / نیا پاس ورڈ</label>
+          <input id="pwNew" type="password" autocomplete="new-password">
+        </div>
+        <div class="field" style="margin-bottom:16px">
+          <label>Repeat new password / دوبارہ لکھیں</label>
+          <input id="pwNew2" type="password" autocomplete="new-password">
+        </div>
+        <div class="actions">
+          <button class="btn" id="pwSave">Save / محفوظ کریں</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+  var TOKEN = null;   // session token from the server; every data call carries it
+
+  var FIELDS = ['date','time','name','occupation','mobile','address','familyHistory','sex','age',
+                'weight','bp','pulse','temp','symptoms','clinicalReports','allergies','causation',
+                'location','constitution','sensation','modality'];
+
+  var LABELS = {
+    date:'Date / تاریخ', time:'Time / وقت', occupation:'Occupation / پیشہ',
+    mobile:'Mobile / موبائل', address:'Address / پتہ', familyHistory:'Family History / خاندانی امراض',
+    sex:'Sex / جنس', age:'Age / عمر', weight:'Weight / وزن', bp:'B.P / بلڈ پریشر',
+    pulse:'Pulse / نبض', temp:'Temp / درجہ حرارت', symptoms:'Symptoms / علامات',
+    clinicalReports:'Clinical Reports / کلینیکل رپورٹس', allergies:'Allergies / الرجی',
+    causation:'Causation / سبب', location:'Location / مقام', constitution:'Constitution / مزاج',
+    sensation:'Sensation / احساس', modality:'Modality / موڈیلٹی'
+  };
+
+  var current = null;
+  var editingRef = null;
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function toast(msg, isErr) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show' + (isErr ? ' err' : '');
+    setTimeout(function(){ t.className = 'toast'; }, isErr ? 5000 : 2500);
+  }
+
+  /** A dead session must send the user back to the sign-in page, not just beep. */
+  function failed(e) {
+    var msg = (e && e.message) ? e.message : String(e);
+    if (msg.indexOf('Session expired') !== -1) { signOut(true); return; }
+    toast(msg, true);
+  }
+
+  function today() {
+    var d = new Date(), p = function(n){ return (n < 10 ? '0' : '') + n; };
+    return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate());
+  }
+
+  function showView(name) {
+    ['search','patient','form','pw'].forEach(function(v){
+      document.getElementById('view-' + v).classList.toggle('active', v === name);
+    });
+    document.getElementById('tabSearch').classList.toggle('active', name === 'search');
+    document.getElementById('tabNew').classList.toggle('active', name === 'form');
+    window.scrollTo(0, 0);
+  }
+
+  // ── sign in ──
+  function doLogin() {
+    var btn = document.getElementById('lgBtn');
+    var err = document.getElementById('loginErr');
+    err.style.display = 'none';
+    btn.disabled = true; btn.textContent = 'Signing in…';
+
+    google.script.run
+      .withSuccessHandler(function(json){
+        btn.disabled = false; btn.textContent = 'Sign in / داخل ہوں';
+        var res = JSON.parse(json);
+        TOKEN = res.token;
+
+        document.getElementById('clinicName').textContent = res.clinic.name;
+        document.getElementById('clinicAddr').textContent = res.clinic.address;
+        document.getElementById('clinicReg').textContent  = res.clinic.reg;
+        document.getElementById('pcName').textContent = res.clinic.name;
+        document.getElementById('pcAddr').textContent = res.clinic.address;
+        document.getElementById('pcReg').textContent  = res.clinic.reg;
+
+        document.getElementById('view-login').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+
+        if (res.mustChangePassword) {
+          // The URL is public, so the factory password opens nothing. The server
+          // refuses all patient data until a real one is set — this screen is the
+          // only place to go.
+          document.getElementById('mustPw').style.display = 'block';
+          document.getElementById('btnPwBack').style.display = 'none';
+          document.querySelector('nav').style.display = 'none';
+          showView('pw');
+          document.getElementById('pwOld').focus();
+          return;
+        }
+
+        document.querySelector('nav').style.display = 'flex';
+        document.getElementById('btnPwBack').style.display = '';
+        document.getElementById('mustPw').style.display = 'none';
+        showView('search');
+        runSearch();
+      })
+      .withFailureHandler(function(e){
+        btn.disabled = false; btn.textContent = 'Sign in / داخل ہوں';
+        err.textContent = e.message;
+        err.style.display = 'block';
+        document.getElementById('lgPass').value = '';
+      })
+      .login(document.getElementById('lgUser').value,
+             document.getElementById('lgPass').value);
+  }
+
+  function signOut(expired) {
+    if (TOKEN) google.script.run.logout(TOKEN);
+    TOKEN = null;
+    current = null;
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('view-login').style.display = 'flex';
+    document.getElementById('lgPass').value = '';
+    document.getElementById('results').innerHTML = '';
+    if (expired) {
+      var err = document.getElementById('loginErr');
+      err.textContent = 'Session expired — please sign in again.';
+      err.style.display = 'block';
+    }
+  }
+
+  // ── search ──
+  var searchTimer = null;
+
+  function runSearch() {
+    if (!TOKEN) return;
+    var q = document.getElementById('q').value;
+    document.getElementById('results').innerHTML = '<div class="empty">Searching…</div>';
+    google.script.run
+      .withSuccessHandler(renderResults)
+      .withFailureHandler(function(e){
+        document.getElementById('results').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+        failed(e);
+      })
+      .searchPatients(TOKEN, q);
+  }
+
+  function renderResults(list) {
+    var box = document.getElementById('results');
+    if (!list || !list.length) {
+      box.innerHTML = '<div class="empty">No patients found. / کوئی مریض نہیں ملا۔</div>';
+      return;
+    }
+    box.innerHTML = list.map(function(p){
+      var sub = [p.age ? 'Age ' + esc(p.age) : '', esc(p.sex), esc(p.mobile)]
+        .filter(Boolean).join(' · ');
+      return '<div class="result" data-ref="' + Number(p.ref) + '">'
+        + '<div class="ref">' + esc(p.ref) + '</div>'
+        + '<div class="who"><div class="nm">' + esc(p.name) + '</div>'
+        + '<div class="sub">' + sub + '</div></div>'
+        + '<div style="color:#B9C4BF">›</div></div>';
+    }).join('');
+
+    // Bind each row directly — they are recreated on every search.
+    var rows = box.querySelectorAll('.result');
+    for (var i = 0; i < rows.length; i++) {
+      (function(row){
+        row.addEventListener('click', function(){
+          openPatient(Number(row.getAttribute('data-ref')));
+        });
+      })(rows[i]);
+    }
+  }
+
+  // ── patient ──
+  function openPatient(ref) {
+    toast('Opening…');
+    google.script.run
+      .withSuccessHandler(function(json){
+        try {
+          var res = JSON.parse(json);
+          current = res.patient;
+          renderPatient(res.patient, res.visits);
+          hideAddVisit();
+          showView('patient');
+        } catch (err) {
+          toast('Could not open patient: ' + err.message, true);
+        }
+      })
+      .withFailureHandler(failed)
+      .getPatient(TOKEN, ref);
+  }
+
+  function renderPatient(p, visits) {
+    document.getElementById('ptName').textContent = p.name;
+    document.getElementById('ptRef').textContent = 'Ref.No ' + p.ref;
+
+    var keys = FIELDS.filter(function(f){ return f !== 'name'; });
+    document.getElementById('ptDetails').innerHTML = keys.map(function(f){
+      return '<div class="d"><div class="k">' + esc(LABELS[f]) + '</div>'
+        + '<div class="v">' + esc(p[f]) + '</div></div>';
+    }).join('');
+
+    renderVisits(visits);
+  }
+
+  function renderVisits(visits) {
+    var body = document.getElementById('ptVisits');
+    if (!visits || !visits.length) {
+      body.innerHTML = '<tr><td colspan="4" class="empty">No visits recorded yet. / ابھی کوئی وزٹ نہیں۔</td></tr>';
+      return;
+    }
+    body.innerHTML = visits.map(function(v){
+      return '<tr><td class="n">' + esc(v.visitNo) + '</td>'
+        + '<td class="dt">' + esc(v.date) + '</td>'
+        + '<td>' + esc(v.condition) + '</td>'
+        + '<td>' + esc(v.remedy) + '</td></tr>';
+    }).join('');
+  }
+
+  // ── add visit ──
+  function showAddVisit() {
+    document.getElementById('vDate').value = today();
+    document.getElementById('vCondition').value = '';
+    document.getElementById('vRemedy').value = '';
+    document.getElementById('visitForm').style.display = 'block';
+    document.getElementById('vCondition').focus();
+  }
+  function hideAddVisit() {
+    document.getElementById('visitForm').style.display = 'none';
+  }
+
+  function saveVisit() {
+    if (!current) return;
+    var btn = document.getElementById('vSave');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    google.script.run
+      .withSuccessHandler(function(json){
+        btn.disabled = false; btn.textContent = 'Save Visit / محفوظ کریں';
+        try {
+          renderVisits(JSON.parse(json).visits);
+          hideAddVisit();
+          toast('Visit saved / وزٹ محفوظ ہو گیا');
+        } catch (err) {
+          toast('Saved, but could not refresh: ' + err.message, true);
+        }
+      })
+      .withFailureHandler(function(e){
+        btn.disabled = false; btn.textContent = 'Save Visit / محفوظ کریں';
+        failed(e);
+      })
+      .saveVisit(TOKEN, {
+        ref: current.ref,
+        date: document.getElementById('vDate').value,
+        condition: document.getElementById('vCondition').value,
+        remedy: document.getElementById('vRemedy').value
+      });
+  }
+
+  // ── patient form ──
+  function newPatient() {
+    editingRef = null;
+    document.getElementById('formTitle').textContent = 'New Patient / نیا مریض';
+    FIELDS.forEach(function(f){ document.getElementById('f_' + f).value = ''; });
+    document.getElementById('f_date').value = today();
+    showView('form');
+    document.getElementById('f_name').focus();
+  }
+
+  function editPatient() {
+    if (!current) return;
+    editingRef = current.ref;
+    document.getElementById('formTitle').textContent =
+      'Edit — ' + current.name + ' (Ref.No ' + current.ref + ')';
+    FIELDS.forEach(function(f){
+      document.getElementById('f_' + f).value = current[f] == null ? '' : current[f];
+    });
+    var d = String(current.date || '').split('/');   // sheet gives dd/MM/yyyy
+    document.getElementById('f_date').value =
+      d.length === 3 ? d[2] + '-' + d[1] + '-' + d[0] : today();
+    showView('form');
+  }
+
+  function collectForm() {
+    var data = {};
+    FIELDS.forEach(function(f){ data[f] = document.getElementById('f_' + f).value; });
+    return data;
+  }
+
+  function savePatient() {
+    var data = collectForm();
+    if (!data.name.trim()) { toast('Patient name is required / نام ضروری ہے', true); return; }
+
+    var btn = document.getElementById('pSave');
+    btn.disabled = true; btn.textContent = 'Saving…';
+
+    var done = function(res){
+      btn.disabled = false; btn.textContent = 'Save Patient / محفوظ کریں';
+      toast('Saved / محفوظ ہو گیا');
+      openPatient(res.ref);
+    };
+    var bad = function(e){
+      btn.disabled = false; btn.textContent = 'Save Patient / محفوظ کریں';
+      failed(e);
+    };
+
+    if (editingRef) {
+      google.script.run.withSuccessHandler(done).withFailureHandler(bad)
+        .updatePatient(TOKEN, editingRef, data);
+    } else {
+      google.script.run.withSuccessHandler(done).withFailureHandler(bad)
+        .savePatient(TOKEN, data);
+    }
+  }
+
+  function cancelForm() {
+    if (editingRef && current) { openPatient(editingRef); }
+    else { showView('search'); }
+  }
+
+  // ── change password ──
+  function savePassword() {
+    var oldp = document.getElementById('pwOld').value;
+    var np   = document.getElementById('pwNew').value;
+    var np2  = document.getElementById('pwNew2').value;
+    if (np !== np2) { toast('New passwords do not match / پاس ورڈ ایک جیسے نہیں', true); return; }
+    if (np.length < 8) { toast('Password must be at least 8 characters / کم از کم 8 حروف', true); return; }
+
+    var btn = document.getElementById('pwSave');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    google.script.run
+      .withSuccessHandler(function(){
+        btn.disabled = false; btn.textContent = 'Save / محفوظ کریں';
+        document.getElementById('pwOld').value = '';
+        document.getElementById('pwNew').value = '';
+        document.getElementById('pwNew2').value = '';
+        document.getElementById('pwWarn').style.display = 'none';
+        document.getElementById('mustPw').style.display = 'none';
+        document.getElementById('btnPwBack').style.display = '';
+        document.querySelector('nav').style.display = 'flex';   // register unlocks now
+        toast('Password changed / پاس ورڈ تبدیل ہو گیا');
+        showView('search');
+        runSearch();
+      })
+      .withFailureHandler(function(e){
+        btn.disabled = false; btn.textContent = 'Save / محفوظ کریں';
+        failed(e);
+      })
+      .changePassword(TOKEN, oldp, np);
+  }
+
+  // ── wiring (never inline onclick — Apps Script's CSP blocks those) ──
+  function on(id, ev, fn) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener(ev, fn);
+  }
+
+  on('lgBtn', 'click', doLogin);
+  on('lgPass', 'keydown', function(e){ if (e.key === 'Enter') doLogin(); });
+  on('lgUser', 'keydown', function(e){ if (e.key === 'Enter') document.getElementById('lgPass').focus(); });
+
+  on('btnLogout', 'click', function(){ signOut(false); });
+  on('lnkChangePw', 'click', function(){ showView('pw'); });
+  on('btnPwBack', 'click', function(){ showView('search'); });
+  on('pwSave', 'click', savePassword);
+
+  on('tabSearch', 'click', function(){ showView('search'); });
+  on('tabNew', 'click', newPatient);
+  on('btnBackToSearch', 'click', function(){ showView('search'); });
+  on('btnAddVisit', 'click', showAddVisit);
+  on('btnEditPatient', 'click', editPatient);
+  on('btnPrint', 'click', function(){ window.print(); });
+  on('vSave', 'click', saveVisit);
+  on('vCancel', 'click', hideAddVisit);
+  on('btnFormBack', 'click', cancelForm);
+  on('pSave', 'click', savePatient);
+  on('pCancel', 'click', cancelForm);
+
+  on('q', 'input', function(){
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(runSearch, 250);
+  });
+
+  document.getElementById('pForm').addEventListener('submit', function(e){ e.preventDefault(); });
+
+  // Silent failures are the hardest kind to chase — put them on screen.
+  window.addEventListener('error', function(e){
+    toast('Error: ' + (e.message || 'unknown'), true);
+  });
+
+  document.getElementById('lgUser').focus();
+</script>
+</body>
+</html>

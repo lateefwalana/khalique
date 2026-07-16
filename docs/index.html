@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Khalique Homoeopathic Clinic</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ───────────── LANDING / SIGN-IN ───────────── -->
+<section id="view-login">
+  <div class="landing">
+    <div class="brand">
+      <div class="crest">ک</div>
+      <h1>Khalique Homoeopathic Clinic</h1>
+      <div class="ur">خلیق ہومیوپیتھک کلینک، بھیرہ</div>
+      <div class="addr">Circular Road, Lalu Wala, Bhera, Sargodha</div>
+      <div class="reg">PHC Reg. No: PHC/R&amp;L/2026/13527</div>
+      <ul>
+        <li>Patient register &amp; case history / مریض کا ریکارڈ</li>
+        <li>Visit-by-visit remedies / ہر وزٹ کی دوا</li>
+        <li>Printable patient card / پرنٹ کارڈ</li>
+      </ul>
+    </div>
+
+    <div class="signin">
+      <h2>Sign in / سائن ان</h2>
+      <div class="sub">Patient register — staff only</div>
+
+      <div id="loginErr" class="loginerr"></div>
+
+      <!-- Google renders its "Sign in with Google" button into here -->
+      <div id="gbtn" style="min-height:44px"></div>
+
+      <div id="signinBusy" class="signin-busy" style="display:none">Signing in…</div>
+
+      <div class="hint">
+        Sign in with the Google account approved by the clinic.<br>
+        Records stay in the clinic's own Google Sheet.
+      </div>
+
+      <div id="setupNote" class="setup-note" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── APP ───────────── -->
+<div id="app">
+  <header>
+    <button class="out no-print" id="btnLogout">Sign out</button>
+    <div class="htxt">
+      <h1 id="clinicName">Khalique Homoeopathic Clinic</h1>
+      <div class="addr" id="clinicAddr"></div>
+      <div class="reg" id="clinicReg"></div>
+    </div>
+  </header>
+
+  <nav>
+    <button id="tabSearch" class="active">Search / تلاش</button>
+    <button id="tabNew">+ New Patient / نیا مریض</button>
+  </nav>
+
+  <main>
+
+    <!-- SEARCH -->
+    <section id="view-search" class="view active">
+      <div class="searchbar">
+        <input id="q" type="search" placeholder="Name, mobile or Ref.No — نام، موبائل یا ریفرنس نمبر" autocomplete="off">
+      </div>
+      <div id="results"></div>
+    </section>
+
+    <!-- PATIENT -->
+    <section id="view-patient" class="view">
+      <button id="btnBackToSearch" class="btn ghost no-print" style="margin-bottom:12px">← Back / واپس</button>
+      <div class="card">
+        <div class="print-head">
+          <div class="cn" id="pcName"></div>
+          <div class="ca" id="pcAddr"></div>
+          <div class="cr" id="pcReg"></div>
+        </div>
+
+        <div class="pt-head">
+          <h2 id="ptName"></h2>
+          <span class="refbadge" id="ptRef"></span>
+        </div>
+        <div class="details" id="ptDetails"></div>
+
+        <h3 class="sec">Visit History / وزٹ کی تفصیل</h3>
+        <table class="visits">
+          <thead>
+            <tr>
+              <th style="width:48px">#</th>
+              <th style="width:104px">Date</th>
+              <th>Condition / Changes — حالت</th>
+              <th>Remedy with Instructions — دوا اور ہدایات</th>
+            </tr>
+          </thead>
+          <tbody id="ptVisits"></tbody>
+        </table>
+
+        <div class="actions no-print" style="margin-top:16px">
+          <button id="btnAddVisit" class="btn">+ Add Visit / نیا وزٹ</button>
+          <button id="btnEditPatient" class="btn ghost">Edit details / تفصیل درست کریں</button>
+          <button id="btnPrint" class="btn ghost">Print / پرنٹ</button>
+        </div>
+
+        <div id="visitForm" class="no-print" style="display:none; margin-top:18px; border-top:2px solid var(--line); padding-top:16px">
+          <h3 class="sec" style="margin-top:0">New Visit / نیا وزٹ</h3>
+          <div class="grid">
+            <div class="field">
+              <label>Date / تاریخ</label>
+              <input id="vDate" type="date">
+            </div>
+          </div>
+          <div class="field wide" style="margin-top:12px">
+            <label>Condition / Changes — حالت اور تبدیلی</label>
+            <textarea id="vCondition" dir="auto"></textarea>
+          </div>
+          <div class="field wide" style="margin-top:12px">
+            <label>Remedy with Instructions — دوا اور ہدایات</label>
+            <textarea id="vRemedy" dir="auto"></textarea>
+          </div>
+          <div class="actions">
+            <button class="btn" id="vSave">Save Visit / محفوظ کریں</button>
+            <button class="btn ghost" id="vCancel">Cancel / منسوخ</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PATIENT FORM -->
+    <section id="view-form" class="view">
+      <button id="btnFormBack" class="btn ghost" style="margin-bottom:12px">← Back / واپس</button>
+      <div class="card">
+        <h2 id="formTitle" style="margin:0 0 16px">New Patient / نیا مریض</h2>
+        <form id="pForm">
+
+          <div class="group">
+            <h3>Patient / مریض</h3>
+            <div class="grid">
+              <div class="field"><label>Date / تاریخ</label><input id="f_date" type="date"></div>
+              <div class="field"><label>Time / وقت</label><input id="f_time" type="time"></div>
+              <div class="field"><label>Patient Name / مریض کا نام *</label><input id="f_name" dir="auto" required></div>
+              <div class="field"><label>Occupation / پیشہ</label><input id="f_occupation" dir="auto"></div>
+              <div class="field"><label>Mobile No / موبائل نمبر</label><input id="f_mobile" inputmode="tel"></div>
+              <div class="field"><label>Address / پتہ</label><input id="f_address" dir="auto"></div>
+            </div>
+          </div>
+
+          <div class="group">
+            <h3>Personal History / ذاتی تفصیل</h3>
+            <div class="grid">
+              <div class="field">
+                <label>Sex / جنس</label>
+                <select id="f_sex">
+                  <option value=""></option>
+                  <option>Male / مرد</option>
+                  <option>Female / عورت</option>
+                  <option>Child / بچہ</option>
+                </select>
+              </div>
+              <div class="field"><label>Age / عمر</label><input id="f_age"></div>
+              <div class="field"><label>Weight / وزن</label><input id="f_weight"></div>
+              <div class="field"><label>B.P / بلڈ پریشر</label><input id="f_bp"></div>
+              <div class="field"><label>Pulse / نبض</label><input id="f_pulse"></div>
+              <div class="field"><label>Temp / درجہ حرارت</label><input id="f_temp"></div>
+              <div class="field wide"><label>Family History / خاندانی امراض</label><textarea id="f_familyHistory" dir="auto"></textarea></div>
+            </div>
+          </div>
+
+          <div class="group">
+            <h3>Case / کیس</h3>
+            <div class="grid">
+              <div class="field wide"><label>Symptoms / علامات</label><textarea id="f_symptoms" dir="auto"></textarea></div>
+              <div class="field wide"><label>Clinical Reports / کلینیکل رپورٹس</label><textarea id="f_clinicalReports" dir="auto"></textarea></div>
+              <div class="field"><label>Allergies / الرجی</label><input id="f_allergies" dir="auto"></div>
+              <div class="field"><label>Causation / سبب</label><input id="f_causation" dir="auto"></div>
+              <div class="field"><label>Location / مقام</label><input id="f_location" dir="auto"></div>
+              <div class="field"><label>Constitution / مزاج</label><input id="f_constitution" dir="auto"></div>
+              <div class="field"><label>Sensation / احساس</label><input id="f_sensation" dir="auto"></div>
+              <div class="field wide"><label>Modality / موڈیلٹی — better &amp; worse</label><textarea id="f_modality" dir="auto"></textarea></div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn" id="pSave">Save Patient / محفوظ کریں</button>
+            <button type="button" class="btn ghost" id="pCancel">Cancel / منسوخ</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- Google Identity Services -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<!-- Your deployment settings — fill these in (see SETUP.md) -->
+<script src="config.js"></script>
+<!-- App logic -->
+<script src="app.js"></script>
+</body>
+</html>
