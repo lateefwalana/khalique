@@ -178,7 +178,7 @@ function initGoogleSignIn() {
     cancel_on_tap_outside: false
   });
   google.accounts.id.renderButton(document.getElementById('gbtn'), {
-    theme: 'filled_blue', size: 'large', text: 'signin_with', shape: 'pill', width: 260
+    theme: 'filled_black', size: 'large', text: 'signin_with', shape: 'pill', width: 260
   });
   google.accounts.id.prompt();   // offer one-tap / auto sign-in
 }

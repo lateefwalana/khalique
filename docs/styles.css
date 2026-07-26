@@ -91,13 +91,24 @@ body {
   .fx-pills, .fx-ripple { display: none; }
 }
 
+/* submerged in the green: a glass tint inside a double gold frame,
+   so the sign-in reads as engraved into the ground, not laid on top */
 .sheet {
   position: relative; z-index: 1;
-  width: 100%; max-width: 430px; text-align: center;
-  background: #FFFEFB; border-radius: 12px; overflow: hidden;
-  padding: 0 38px 26px;
-  box-shadow: 0 42px 90px rgba(0,0,0,.5), 0 0 0 1px rgba(201,162,39,.4);
+  width: 100%; max-width: 470px; text-align: center;
+  color: #F2EFE4;
+  background: rgba(9,33,24,.46);
+  border: 1px solid rgba(201,162,39,.5);
+  border-radius: 10px;
+  padding: 34px 40px 26px;
+  box-shadow: 0 30px 70px rgba(0,0,0,.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   animation: sheet-rise .5s ease-out both;
+}
+.sheet::before {
+  content: ""; position: absolute; inset: 7px; pointer-events: none;
+  border: 1px solid rgba(201,162,39,.22); border-radius: 6px;
 }
 @keyframes sheet-rise {
   from { opacity: 0; transform: translateY(16px); }
@@ -106,56 +117,51 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .sheet { animation: none; }
 }
-/* the pad's ruled band: solid green over a gold hairline */
-.sheet-band {
-  height: 7px; margin: 0 -38px;
-  background: var(--green-dark);
-  border-bottom: 2px solid var(--gold);
-}
-.sheet-logo { width: 118px; height: auto; margin: 30px auto 4px; display: block; }
+.sheet-logo { width: 122px; height: auto; margin: 2px auto 6px; display: block; }
 .sheet-ur {
   font-family: "Noto Nastaliq Urdu", serif;
-  font-size: 21px; line-height: 2.1; color: var(--green-deep);
+  font-size: 21px; line-height: 2.1; color: #EFEAD8;
 }
 .sheet-doc {
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 25px; font-weight: 700; color: var(--green-dark);
+  font-size: 25px; font-weight: 700; color: #EFE6C8;
   line-height: 1.15; margin-top: 2px;
 }
 .sheet-dhms {
   font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--gold); margin-top: 4px;
+  color: #D9B84A; margin-top: 4px;
 }
 .sheet-rule {
   display: flex; align-items: center; gap: 12px;
-  margin: 18px 0 16px; color: var(--gold); font-size: 13px;
+  margin: 18px 0 16px; color: #D9B84A; font-size: 13px;
 }
 .sheet-rule::before, .sheet-rule::after {
-  content: ""; flex: 1; border-top: 1px solid var(--line);
+  content: ""; flex: 1; border-top: 1px solid rgba(201,162,39,.32);
 }
-.sheet-signin { margin: 0; font-size: 15px; font-weight: 700; color: var(--ink); }
-.sheet-sub { color: var(--muted); font-size: 12.5px; margin: 3px 0 18px; }
+.sheet-signin { margin: 0; font-size: 15px; font-weight: 700; color: #F2EFE4; }
+.sheet-sub { color: rgba(242,239,228,.62); font-size: 12.5px; margin: 3px 0 18px; }
 .gbtn { min-height: 44px; display: flex; justify-content: center; }
-.signin-busy { color: var(--muted); font-size: 14px; margin-top: 14px; }
+.signin-busy { color: rgba(242,239,228,.7); font-size: 14px; margin-top: 14px; }
 .loginerr {
-  display: none; background: #FDECEA; color: #A32B24; border: 1px solid #F3C6C2;
+  display: none; background: rgba(163,43,36,.28); color: #FFD9D5;
+  border: 1px solid rgba(243,198,194,.4);
   padding: 10px 12px; border-radius: 8px; font-size: 14px; margin-bottom: 14px;
   text-align: left;
 }
-.hint { margin-top: 16px; font-size: 12px; color: var(--muted); }
+.hint { margin-top: 16px; font-size: 12px; color: rgba(242,239,228,.6); }
 .setup-note {
-  margin-top: 20px; font-size: 13px; color: #6B5310; text-align: left;
-  background: #FFF4D6; border: 1px solid #EBD9A3; border-radius: 8px; padding: 12px 14px;
+  margin-top: 20px; font-size: 13px; color: #EBD9A3; text-align: left;
+  background: rgba(201,162,39,.12); border: 1px solid rgba(201,162,39,.35);
+  border-radius: 8px; padding: 12px 14px;
 }
-.setup-note code { background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 4px; }
+.setup-note code { background: rgba(0,0,0,.25); padding: 1px 5px; border-radius: 4px; }
 .sheet-foot {
-  margin-top: 22px; padding-top: 12px; border-top: 1px dotted #B9C8C1;
-  font-size: 11px; line-height: 1.7; color: var(--muted);
+  margin-top: 22px; padding-top: 12px; border-top: 1px dotted rgba(201,162,39,.35);
+  font-size: 11px; line-height: 1.7; color: rgba(242,239,228,.55);
 }
 
 @media (max-width: 480px) {
-  .sheet { padding: 0 24px 22px; }
-  .sheet-band { margin: 0 -24px; }
+  .sheet { padding: 26px 22px 20px; }
   .sheet-ur { font-size: 18px; }
   .sheet-doc { font-size: 22px; }
 }
