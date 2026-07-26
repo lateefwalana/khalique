@@ -5,43 +5,46 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Khalique Homoeopathic Clinic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- ───────────── LANDING / SIGN-IN ───────────── -->
+<!-- ───────────── LANDING / SIGN-IN — clinic stationery ───────────── -->
 <section id="view-login">
-  <div class="landing">
-    <div class="brand">
-      <div class="crest">ک</div>
-      <h1>Khalique Homoeopathic Clinic</h1>
-      <div class="ur">خلیق ہومیوپیتھک کلینک، بھیرہ</div>
-      <div class="addr">Circular Road, Lalu Wala, Bhera, Sargodha</div>
-      <div class="reg">PHC Reg. No: PHC/R&amp;L/2026/13527</div>
-      <ul>
-        <li>Patient register &amp; case history / مریض کا ریکارڈ</li>
-        <li>Visit-by-visit remedies / ہر وزٹ کی دوا</li>
-        <li>Printable patient card / پرنٹ کارڈ</li>
-      </ul>
+  <div class="sheet">
+    <div class="sheet-band"></div>
+
+    <img class="sheet-logo" src="logo.png" alt="Khalique Homoeopathic Clinic">
+    <div class="sheet-ur">خلیق ہومیوپیتھک کلینک، بھیرہ</div>
+    <div class="sheet-doc">Muhammad Arshad Khalique</div>
+    <div class="sheet-dhms">DHMS &mdash; Homeopathic Doctor</div>
+
+    <div class="sheet-rule"><span>❦</span></div>
+
+    <h2 class="sheet-signin">Sign in / سائن ان</h2>
+    <div class="sheet-sub">Patient register — staff only / صرف عملے کے لیے</div>
+
+    <div id="loginErr" class="loginerr"></div>
+
+    <!-- Google renders its "Sign in with Google" button into here -->
+    <div id="gbtn" class="gbtn"></div>
+
+    <div id="signinBusy" class="signin-busy" style="display:none">Signing in…</div>
+
+    <div class="hint">
+      Sign in with the Google account approved by the clinic.<br>
+      Records stay in the clinic's own Google Sheet.
     </div>
 
-    <div class="signin">
-      <h2>Sign in / سائن ان</h2>
-      <div class="sub">Patient register — staff only</div>
+    <div id="setupNote" class="setup-note" style="display:none"></div>
 
-      <div id="loginErr" class="loginerr"></div>
-
-      <!-- Google renders its "Sign in with Google" button into here -->
-      <div id="gbtn" style="min-height:44px"></div>
-
-      <div id="signinBusy" class="signin-busy" style="display:none">Signing in…</div>
-
-      <div class="hint">
-        Sign in with the Google account approved by the clinic.<br>
-        Records stay in the clinic's own Google Sheet.
-      </div>
-
-      <div id="setupNote" class="setup-note" style="display:none"></div>
+    <div class="sheet-foot">
+      Circular Road, Lalu Wala Gate, Opposite Water Filtration Plant, Bhera<br>
+      N.H.C Reg. # 84150 &nbsp;&bull;&nbsp; P.H.C Reg. # R-13527
     </div>
   </div>
 </section>
