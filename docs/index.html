@@ -72,34 +72,87 @@
       <div id="results"></div>
     </section>
 
-    <!-- PATIENT -->
+    <!-- PATIENT — prescription-pad layout -->
     <section id="view-patient" class="view">
       <button id="btnBackToSearch" class="btn ghost no-print" style="margin-bottom:12px">← Back / واپس</button>
-      <div class="card">
-        <div class="print-head">
-          <div class="cn" id="pcName"></div>
-          <div class="ca" id="pcAddr"></div>
-          <div class="cr" id="pcReg"></div>
+      <div class="pad">
+
+        <div class="pad-head">
+          <img class="pad-logo" src="logo.png" alt="Khalique Homoeopathic Clinic">
+          <div class="pad-doc">
+            <div class="pad-name">Muhammad Arshad Khalique</div>
+            <div class="pad-title">DHMS &mdash; Homeopathic Doctor / ہومیوپیتھک ڈاکٹر</div>
+            <div class="pad-regs">N.H.C Reg. # 84150 &nbsp;&bull;&nbsp; P.H.C Reg. # R-13527</div>
+            <div class="pad-contact">Contacts: 0306-5128337 &nbsp;&bull;&nbsp; 0333-5509596</div>
+          </div>
+          <div class="pad-meta">
+            <div class="pm"><span>I.D:</span><b id="pd_ref"></b></div>
+            <div class="pm"><span>Date / تاریخ:</span><b id="pd_date"></b></div>
+            <div class="pm"><span>Time / وقت:</span><b id="pd_time"></b></div>
+          </div>
+        </div>
+        <div class="pad-addr">Circular Road, Lalu Wala Gate, Opposite Water Filtration Plant, Bhera</div>
+
+        <div class="pad-row">
+          <div class="pf grow2"><label>Patient Name / نام</label><div class="pv strong" id="pd_name"></div></div>
+          <div class="pf"><label>Cell No. / موبائل</label><div class="pv" id="pd_mobile"></div></div>
+        </div>
+        <div class="pad-row">
+          <div class="pf"><label>Occupation / پیشہ</label><div class="pv" id="pd_occupation"></div></div>
+          <div class="pf"><label>Location / مقام</label><div class="pv" id="pd_location"></div></div>
+          <div class="pf"><label>Sensation / احساس</label><div class="pv" id="pd_sensation"></div></div>
+        </div>
+        <div class="pad-row">
+          <div class="pf"><label>Address / پتہ</label><div class="pv" id="pd_address"></div></div>
+          <div class="pf"><label>Family History / خاندانی امراض</label><div class="pv" id="pd_familyHistory"></div></div>
+        </div>
+        <div class="pad-row vitals">
+          <div class="pf"><label>Age / عمر</label><div class="pv" id="pd_age"></div></div>
+          <div class="pf"><label>Sex / جنس</label><div class="pv" id="pd_sex"></div></div>
+          <div class="pf"><label>Weight / وزن</label><div class="pv" id="pd_weight"></div></div>
+        </div>
+        <div class="pad-row vitals">
+          <div class="pf"><label>B.P. / بلڈ پریشر</label><div class="pv" id="pd_bp"></div></div>
+          <div class="pf"><label>Pulse / نبض</label><div class="pv" id="pd_pulse"></div></div>
+          <div class="pf"><label>Temp. / حرارت</label><div class="pv" id="pd_temp"></div></div>
         </div>
 
-        <div class="pt-head">
-          <h2 id="ptName"></h2>
-          <span class="refbadge" id="ptRef"></span>
+        <div class="pad-split">
+          <div class="pad-box">
+            <h4>Symptoms / علامات</h4>
+            <div class="pv-block" id="pd_symptoms"></div>
+          </div>
+          <div class="pad-box">
+            <h4>Clinical Report / کلینیکل رپورٹ</h4>
+            <div class="pv-block" id="pd_clinicalReports"></div>
+          </div>
         </div>
-        <div class="details" id="ptDetails"></div>
 
-        <h3 class="sec">Visit History / وزٹ کی تفصیل</h3>
+        <div class="pad-row">
+          <div class="pf"><label>Allergies / الرجی</label><div class="pv" id="pd_allergies"></div></div>
+          <div class="pf"><label>Causation / سبب</label><div class="pv" id="pd_causation"></div></div>
+          <div class="pf"><label>Constitution / مزاج</label><div class="pv" id="pd_constitution"></div></div>
+        </div>
+        <div class="pad-row">
+          <div class="pf"><label>Modality / موڈیلٹی</label><div class="pv" id="pd_modality"></div></div>
+        </div>
+
+        <h3 class="pad-sec">Visit History / وزٹ کی تفصیل</h3>
         <table class="visits">
           <thead>
             <tr>
-              <th style="width:48px">#</th>
+              <th style="width:56px">Sr.No.</th>
               <th style="width:104px">Date</th>
-              <th>Condition / Changes — حالت</th>
+              <th>Condition — حالت</th>
               <th>Remedy with Instructions — دوا اور ہدایات</th>
             </tr>
           </thead>
           <tbody id="ptVisits"></tbody>
         </table>
+
+        <div class="pad-sign">
+          <div class="sigline">Sign &amp; Stamp / دستخط و مہر</div>
+        </div>
 
         <div class="actions no-print" style="margin-top:16px">
           <button id="btnAddVisit" class="btn">+ Add Visit / نیا وزٹ</button>

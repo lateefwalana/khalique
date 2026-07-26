@@ -140,9 +140,6 @@ function startApp(clinic) {
   document.getElementById('clinicName').textContent = clinic.name;
   document.getElementById('clinicAddr').textContent = clinic.address;
   document.getElementById('clinicReg').textContent  = clinic.reg;
-  document.getElementById('pcName').textContent = clinic.name;
-  document.getElementById('pcAddr').textContent = clinic.address;
-  document.getElementById('pcReg').textContent  = clinic.reg;
 
   document.getElementById('view-login').style.display = 'none';
   document.getElementById('app').style.display = 'block';
@@ -239,14 +236,12 @@ function openPatient(ref) {
 }
 
 function renderPatient(p, visits) {
-  document.getElementById('ptName').textContent = p.name;
-  document.getElementById('ptRef').textContent = 'Ref.No ' + p.ref;
-
-  var keys = FIELDS.filter(function(f){ return f !== 'name'; });
-  document.getElementById('ptDetails').innerHTML = keys.map(function(f){
-    return '<div class="d"><div class="k">' + esc(LABELS[f]) + '</div>'
-      + '<div class="v">' + esc(p[f]) + '</div></div>';
-  }).join('');
+  // The patient view is a prescription pad: one slot per field, id "pd_<field>".
+  document.getElementById('pd_ref').textContent = p.ref;
+  FIELDS.forEach(function(f){
+    var el = document.getElementById('pd_' + f);
+    if (el) el.textContent = p[f] == null ? '' : p[f];
+  });
 
   renderVisits(visits);
 }

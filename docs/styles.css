@@ -155,23 +155,82 @@ button.btn:disabled { opacity: .55; cursor: default; }
 .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
 
 .card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
-.pt-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
-.pt-head h2 { margin: 0; font-size: 22px; }
-.pt-head .refbadge {
-  background: var(--light); color: var(--green-dark); font-weight: 700;
-  padding: 3px 10px; border-radius: 6px; font-size: 14px;
-}
-.details { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px 20px; margin-top: 14px; }
-.details .d { border-bottom: 1px dotted var(--line); padding-bottom: 5px; }
-.details .k { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
-.details .v { font-size: 15px; white-space: pre-wrap; word-wrap: break-word; }
-.details .v:empty::after { content: "—"; color: #C3CCC8; }
 
-h3.sec { margin: 22px 0 10px; font-size: 15px; color: var(--green); }
+/* ─────────────── PRESCRIPTION PAD (patient page) ─────────────── */
+.pad {
+  background: #fff; border: 1px solid var(--green); border-radius: 4px;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--gold);
+  padding: 20px 22px;
+}
+.pad-head {
+  display: flex; align-items: center; gap: 16px;
+  padding-bottom: 12px;
+}
+.pad-logo { width: 84px; height: auto; flex: none; }
+.pad-doc { flex: 1; text-align: center; min-width: 0; }
+.pad-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px; font-weight: 700; color: var(--green-dark); line-height: 1.15;
+}
+.pad-title { font-size: 13px; font-weight: 600; color: var(--gold); letter-spacing: .05em; text-transform: uppercase; margin-top: 2px; }
+.pad-regs { font-size: 12px; color: var(--muted); margin-top: 5px; }
+.pad-contact { font-size: 12px; color: var(--muted); }
+.pad-meta { flex: none; display: flex; flex-direction: column; gap: 7px; font-size: 13px; }
+.pad-meta .pm { display: flex; align-items: baseline; gap: 6px; justify-content: space-between; }
+.pad-meta .pm span { color: var(--muted); white-space: nowrap; }
+.pad-meta .pm b {
+  min-width: 92px; text-align: center; border-bottom: 1px solid var(--ink);
+  font-weight: 600; padding: 0 4px;
+}
+.pad-addr {
+  text-align: center; font-size: 12.5px; color: var(--green-dark);
+  border-top: 2px solid var(--green); border-bottom: 1px solid var(--gold);
+  padding: 5px 0 6px; margin-bottom: 14px;
+}
+
+.pad-row { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 11px; }
+.pad-row .pf { flex: 1 1 180px; min-width: 0; display: flex; align-items: baseline; gap: 8px; }
+.pad-row .pf.grow2 { flex-grow: 2.2; }
+.pad-row.vitals .pf { flex: 1 1 auto; }
+.pad-row.vitals .pv { white-space: nowrap; }
+.pf label { font-size: 12.5px; font-weight: 600; color: var(--green-dark); white-space: nowrap; }
+.pf .pv {
+  flex: 1; min-width: 40px; border-bottom: 1px dotted #9FB3AB;
+  font-size: 15px; padding: 0 3px 2px; white-space: pre-wrap; word-wrap: break-word;
+}
+.pf .pv.strong { font-weight: 700; font-size: 16px; text-transform: uppercase; }
+.pv:empty::after, .pv-block:empty::after { content: "—"; color: #C3CCC8; }
+
+.pad-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 4px 0 13px; }
+.pad-box { border: 1px solid var(--line); border-radius: 4px; padding: 9px 12px 11px; min-height: 92px; }
+.pad-box h4 {
+  margin: 0 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--green); border-bottom: 1px solid var(--line); padding-bottom: 4px;
+}
+.pv-block { font-size: 15px; white-space: pre-wrap; word-wrap: break-word; }
+
+h3.pad-sec {
+  margin: 18px 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--green);
+}
+.pad-sign { display: flex; justify-content: flex-end; margin-top: 34px; }
+.pad-sign .sigline {
+  border-top: 1px solid var(--ink); padding: 5px 14px 0; font-size: 12.5px;
+  color: var(--green-dark); text-align: center; min-width: 220px;
+}
+
+@media (max-width: 640px) {
+  .pad { padding: 14px; }
+  .pad-head { flex-wrap: wrap; justify-content: center; }
+  .pad-meta { flex-direction: row; flex-wrap: wrap; width: 100%; justify-content: center; }
+  .pad-split { grid-template-columns: 1fr; }
+}
+
 table.visits { width: 100%; border-collapse: collapse; font-size: 15px; }
 table.visits th {
-  background: var(--green); color: #fff; text-align: left; padding: 9px 10px;
+  background: var(--light); color: var(--green-dark); text-align: left; padding: 8px 10px;
   font-size: 12px; text-transform: uppercase; letter-spacing: .03em;
+  border: 1px solid var(--green);
 }
 table.visits td { border: 1px solid var(--line); padding: 9px 10px; vertical-align: top; white-space: pre-wrap; }
 table.visits td.n { text-align: center; font-weight: 700; color: var(--green); width: 48px; }
@@ -187,18 +246,15 @@ table.visits td.dt { width: 104px; white-space: nowrap; }
 .toast.show { opacity: 1; }
 .toast.err { background: #A32B24; }
 
-.print-head { display: none; }
-
 @media print {
   body { background: #fff; }
   header, nav, .no-print, .searchbar { display: none !important; }
   main { padding: 0; max-width: none; }
   .card { border: 0; padding: 0; }
-  .print-head { display: block; text-align: center; margin-bottom: 14px; }
-  .print-head .cn { font-size: 20px; font-weight: 700; color: #1F6F54; }
-  .print-head .ca { font-size: 11px; color: #555; }
-  .print-head .cr { font-size: 10px; color: #888; }
-  table.visits th { background: #1F6F54 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .details .d { break-inside: avoid; }
+  .pad { box-shadow: none; border: 1.5px solid var(--green); padding: 16px 18px; }
+  .pad, table.visits th, .pad-addr {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .pad-row { break-inside: avoid; }
   table.visits tr { break-inside: avoid; }
 }
