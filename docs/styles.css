@@ -25,8 +25,74 @@ body {
     linear-gradient(168deg, #0B2E22 0%, var(--green-deep) 42%, #124733 100%);
   display: flex; align-items: center; justify-content: center;
   padding: 34px 18px;
+  position: relative; overflow: hidden;
 }
+
+/* ── ambient homeopathy: drifting sprigs, rising pillules, dilution ripples ── */
+.bgfx { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.fx-branch { position: absolute; height: auto; }
+.fx-b1 {
+  color: rgba(201,162,39,.17); width: 240px; left: -34px; top: 5%;
+  transform-origin: 50% 100%;
+  animation: fx-sway 26s ease-in-out infinite alternate;
+}
+.fx-b2 {
+  color: rgba(197,226,213,.13); width: 320px; right: -48px; bottom: -6%;
+  transform-origin: 50% 100%;
+  animation: fx-sway2 31s ease-in-out infinite alternate;
+}
+@keyframes fx-sway  { from { transform: rotate(-2.5deg); } to { transform: rotate(2.5deg); } }
+@keyframes fx-sway2 { from { transform: scaleX(-1) rotate(2.5deg); } to { transform: scaleX(-1) rotate(-3deg); } }
+
+/* pillules: tiny sugar globules rising like bubbles through a dilution */
+.fx-pills i {
+  position: absolute; bottom: -3vh; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle at 35% 30%,
+    rgba(255,244,214,.85), rgba(201,162,39,.28) 62%, transparent 78%);
+  animation: fx-rise linear infinite;
+}
+@keyframes fx-rise {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  8%   { opacity: .5; }
+  60%  { transform: translateY(-65vh) translateX(-2vw); }
+  90%  { opacity: .22; }
+  100% { transform: translateY(-108vh) translateX(3vw); opacity: 0; }
+}
+.fx-pills i:nth-child(1) { left: 8%;  width: 6px; height: 6px; animation-duration: 24s; animation-delay: -2s; }
+.fx-pills i:nth-child(2) { left: 18%; width: 4px; height: 4px; animation-duration: 30s; animation-delay: -12s; }
+.fx-pills i:nth-child(3) { left: 29%; width: 7px; height: 7px; animation-duration: 21s; animation-delay: -7s; }
+.fx-pills i:nth-child(4) { left: 41%; width: 5px; height: 5px; animation-duration: 27s; animation-delay: -18s; }
+.fx-pills i:nth-child(5) { left: 55%; width: 4px; height: 4px; animation-duration: 33s; animation-delay: -5s; }
+.fx-pills i:nth-child(6) { left: 66%; width: 6px; height: 6px; animation-duration: 23s; animation-delay: -14s; }
+.fx-pills i:nth-child(7) { left: 76%; width: 5px; height: 5px; animation-duration: 29s; animation-delay: -9s; }
+.fx-pills i:nth-child(8) { left: 87%; width: 7px; height: 7px; animation-duration: 20s; animation-delay: -16s; }
+.fx-pills i:nth-child(9) { left: 94%; width: 4px; height: 4px; animation-duration: 26s; animation-delay: -1s; }
+
+/* a drop meets the water: slow concentric rings */
+.fx-ripple { position: absolute; }
+.fx-r1 { left: 15%; top: 26%; }
+.fx-r2 { left: 83%; top: 66%; }
+.fx-ripple i {
+  position: absolute; left: 50%; top: 50%;
+  width: 46px; height: 46px; margin: -23px 0 0 -23px;
+  border: 1px solid rgba(201,162,39,.4); border-radius: 50%; opacity: 0;
+  animation: fx-drop 9s cubic-bezier(.1,.5,.4,1) infinite;
+}
+.fx-ripple i:nth-child(2) { animation-delay: 3s; }
+.fx-ripple i:nth-child(3) { animation-delay: 6s; }
+@keyframes fx-drop {
+  0%   { transform: scale(.15); opacity: 0; }
+  10%  { opacity: .5; }
+  70%  { opacity: .12; }
+  100% { transform: scale(7); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bgfx * { animation: none !important; }
+  .fx-pills, .fx-ripple { display: none; }
+}
+
 .sheet {
+  position: relative; z-index: 1;
   width: 100%; max-width: 430px; text-align: center;
   background: #FFFEFB; border-radius: 12px; overflow: hidden;
   padding: 0 38px 26px;

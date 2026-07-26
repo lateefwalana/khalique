@@ -35,8 +35,74 @@
       linear-gradient(168deg, #0B2E22 0%, var(--green-deep) 42%, #124733 100%);
     display: flex; align-items: center; justify-content: center;
     padding: 34px 18px;
+    position: relative; overflow: hidden;
   }
+
+  /* ── ambient homeopathy: drifting sprigs, rising pillules, dilution ripples ── */
+  .bgfx { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .fx-branch { position: absolute; height: auto; }
+  .fx-b1 {
+    color: rgba(201,162,39,.17); width: 240px; left: -34px; top: 5%;
+    transform-origin: 50% 100%;
+    animation: fx-sway 26s ease-in-out infinite alternate;
+  }
+  .fx-b2 {
+    color: rgba(197,226,213,.13); width: 320px; right: -48px; bottom: -6%;
+    transform-origin: 50% 100%;
+    animation: fx-sway2 31s ease-in-out infinite alternate;
+  }
+  @keyframes fx-sway  { from { transform: rotate(-2.5deg); } to { transform: rotate(2.5deg); } }
+  @keyframes fx-sway2 { from { transform: scaleX(-1) rotate(2.5deg); } to { transform: scaleX(-1) rotate(-3deg); } }
+
+  /* pillules: tiny sugar globules rising like bubbles through a dilution */
+  .fx-pills i {
+    position: absolute; bottom: -3vh; border-radius: 50%; opacity: 0;
+    background: radial-gradient(circle at 35% 30%,
+      rgba(255,244,214,.85), rgba(201,162,39,.28) 62%, transparent 78%);
+    animation: fx-rise linear infinite;
+  }
+  @keyframes fx-rise {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    8%   { opacity: .5; }
+    60%  { transform: translateY(-65vh) translateX(-2vw); }
+    90%  { opacity: .22; }
+    100% { transform: translateY(-108vh) translateX(3vw); opacity: 0; }
+  }
+  .fx-pills i:nth-child(1) { left: 8%;  width: 6px; height: 6px; animation-duration: 24s; animation-delay: -2s; }
+  .fx-pills i:nth-child(2) { left: 18%; width: 4px; height: 4px; animation-duration: 30s; animation-delay: -12s; }
+  .fx-pills i:nth-child(3) { left: 29%; width: 7px; height: 7px; animation-duration: 21s; animation-delay: -7s; }
+  .fx-pills i:nth-child(4) { left: 41%; width: 5px; height: 5px; animation-duration: 27s; animation-delay: -18s; }
+  .fx-pills i:nth-child(5) { left: 55%; width: 4px; height: 4px; animation-duration: 33s; animation-delay: -5s; }
+  .fx-pills i:nth-child(6) { left: 66%; width: 6px; height: 6px; animation-duration: 23s; animation-delay: -14s; }
+  .fx-pills i:nth-child(7) { left: 76%; width: 5px; height: 5px; animation-duration: 29s; animation-delay: -9s; }
+  .fx-pills i:nth-child(8) { left: 87%; width: 7px; height: 7px; animation-duration: 20s; animation-delay: -16s; }
+  .fx-pills i:nth-child(9) { left: 94%; width: 4px; height: 4px; animation-duration: 26s; animation-delay: -1s; }
+
+  /* a drop meets the water: slow concentric rings */
+  .fx-ripple { position: absolute; }
+  .fx-r1 { left: 15%; top: 26%; }
+  .fx-r2 { left: 83%; top: 66%; }
+  .fx-ripple i {
+    position: absolute; left: 50%; top: 50%;
+    width: 46px; height: 46px; margin: -23px 0 0 -23px;
+    border: 1px solid rgba(201,162,39,.4); border-radius: 50%; opacity: 0;
+    animation: fx-drop 9s cubic-bezier(.1,.5,.4,1) infinite;
+  }
+  .fx-ripple i:nth-child(2) { animation-delay: 3s; }
+  .fx-ripple i:nth-child(3) { animation-delay: 6s; }
+  @keyframes fx-drop {
+    0%   { transform: scale(.15); opacity: 0; }
+    10%  { opacity: .5; }
+    70%  { opacity: .12; }
+    100% { transform: scale(7); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bgfx * { animation: none !important; }
+    .fx-pills, .fx-ripple { display: none; }
+  }
+
   .sheet {
+    position: relative; z-index: 1;
     width: 100%; max-width: 430px; text-align: center;
     background: #FFFEFB; border-radius: 12px; overflow: hidden;
     padding: 0 38px 26px;
@@ -307,6 +373,48 @@
 
 <!-- ───────────── LANDING / SIGN-IN — clinic stationery ───────────── -->
 <section id="view-login">
+
+  <!-- ambient homeopathy: drifting sprigs, rising pillules, dilution ripples -->
+  <div class="bgfx" aria-hidden="true">
+    <svg class="fx-branch fx-b1" viewBox="0 0 220 360" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M110 352 C 98 280 120 200 104 48"/>
+      <path d="M104 310 C 66 300 44 268 50 238 C 84 250 100 280 104 310 Z"/>
+      <path d="M56 244 C 74 266 92 288 104 310"/>
+      <path d="M108 272 C 146 262 168 230 162 200 C 128 212 112 242 108 272 Z"/>
+      <path d="M156 206 C 138 228 120 250 108 272"/>
+      <path d="M104 232 C 72 222 54 194 60 170 C 88 182 100 206 104 232 Z"/>
+      <path d="M64 175 C 80 194 94 214 104 232"/>
+      <path d="M106 192 C 138 182 156 154 150 130 C 122 142 110 168 106 192 Z"/>
+      <path d="M146 135 C 130 152 116 172 106 192"/>
+      <path d="M102 150 C 76 142 62 120 66 100 C 88 110 98 130 102 150 Z"/>
+      <path d="M104 112 C 130 104 144 82 140 64 C 116 74 106 94 104 112 Z"/>
+      <path d="M104 48 C 96 30 100 12 110 2 C 120 14 118 34 104 48 Z"/>
+      <circle cx="124" cy="226" r="5"/>
+      <circle cx="132" cy="238" r="4"/>
+      <circle cx="122" cy="244" r="3.5"/>
+    </svg>
+    <svg class="fx-branch fx-b2" viewBox="0 0 220 360" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M110 352 C 98 280 120 200 104 48"/>
+      <path d="M104 310 C 66 300 44 268 50 238 C 84 250 100 280 104 310 Z"/>
+      <path d="M56 244 C 74 266 92 288 104 310"/>
+      <path d="M108 272 C 146 262 168 230 162 200 C 128 212 112 242 108 272 Z"/>
+      <path d="M156 206 C 138 228 120 250 108 272"/>
+      <path d="M104 232 C 72 222 54 194 60 170 C 88 182 100 206 104 232 Z"/>
+      <path d="M64 175 C 80 194 94 214 104 232"/>
+      <path d="M106 192 C 138 182 156 154 150 130 C 122 142 110 168 106 192 Z"/>
+      <path d="M146 135 C 130 152 116 172 106 192"/>
+      <path d="M102 150 C 76 142 62 120 66 100 C 88 110 98 130 102 150 Z"/>
+      <path d="M104 112 C 130 104 144 82 140 64 C 116 74 106 94 104 112 Z"/>
+      <path d="M104 48 C 96 30 100 12 110 2 C 120 14 118 34 104 48 Z"/>
+      <circle cx="124" cy="226" r="5"/>
+      <circle cx="132" cy="238" r="4"/>
+      <circle cx="122" cy="244" r="3.5"/>
+    </svg>
+    <div class="fx-ripple fx-r1"><i></i><i></i><i></i></div>
+    <div class="fx-ripple fx-r2"><i></i><i></i><i></i></div>
+    <div class="fx-pills"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+
   <div class="sheet">
     <div class="sheet-band"></div>
 
